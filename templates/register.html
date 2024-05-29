@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="titlemb-30">
+                  <h2> Create a student account</h2>
+                </div>				
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('auth') }}">Home</a>
+                      </li>
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('authentication_blueprint.login') }}">Login</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Create a student account
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+		<form action="{{ url_for('authentication_blueprint.register') }}" method="post">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card-style settings-card-1 mb-30">
+                <div
+                  class="
+                    title
+                    mb-30
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                  "
+                >
+				{{ msg }}
+                </div>
+                <div class="profile-info">         
+                  <div class="input-style-1">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Password" id="password" required>
+                  </div>
+				  <div class="input-style-1">
+                    <label>Email</label>
+                    <input type="email"
+					name="email" placeholder="test@mail.com" id="email" required
+                    />
+                  </div>
+
+
+                          
+                    <div class="input-style-1">
+                      <label>Surname *</label>
+                      <input type="text" name="surname"  required />
+                    </div>
+
+                    <div class="input-style-1">
+                      <label>Other name *</label>
+                      <input type="text" name="othernames"  required />
+                    </div>
+
+                    <div class="select-style-1">
+                      <label>Gender </label>
+                      <div class="select-position">
+                      <select name="gender">
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Do not mention</option>
+                      </select>  
+                      </div>                     
+                    </div>
+
+                    <div class="input-style-1">
+                      <label>Date of birth</label>
+                      <input type="date" name="dob"  />
+                    </div>
+
+                    <div class="input-style-1">
+                      <label>Phone</label>
+                      <input type="text" name="phone"  />
+                    </div>  
+
+                    <div class="select-style-1">
+                      <label>Class </label>
+                      <div class="select-position">
+                      <select name="class">
+                        {% for class_list in class_rec %}
+                        <option value="{{ class_list[0] }}">{{ class_list[1] }}</option>  
+                        {% endfor %}                     
+                      </select> 
+                      </div>                      
+                    </div>
+                  
+                  <div class="col-12">                      
+					  <input type="submit" value="Register" class="main-btn primary-btn btn-hover">
+                  </div>
+
+                    <br/>Already registered? <a href="{{ url_for('authentication_blueprint.login') }}">Click here to Login</a>
+                </div>
+              </div>
+              <!-- end card -->
+            </div>
+            <!-- end col -->
+
+            
+          </div>
+          <!-- end row -->
+		</form>
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+
+{% endblock %}

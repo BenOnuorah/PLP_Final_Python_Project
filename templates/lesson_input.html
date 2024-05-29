@@ -1,0 +1,242 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="titlemb-30">
+                  <h2> 
+                  {% if request.args.get('task') == 'edit' %} 
+                    Edit Lesson
+                  {% else %}
+                    Add Lesson
+                  {% endif %}
+                  </h2>
+
+
+                </div>				
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('auth') }}">Home</a>
+                      </li>
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('lesson_blueprint.lesson') }}">Lessons</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Add Lesson
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+		<form action="{{ url_for('lesson_blueprint.lesson_input') }}" method="post">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card-style settings-card-1 mb-30">
+                <div
+                  class="
+                    title
+                    mb-30
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                  "
+                >
+				{{ msg }}
+
+       
+                </div>
+
+
+              
+
+                          
+                    <div class="input-style-1">
+                      <label>Lesson title *</label>
+
+                      
+
+                      {% if preview is defined %}
+                          <input type="text" name="lesson_title" value="{{ preview[1] }}" />
+                      {% else %}
+                          <input type="text" name="lesson_title"  required />
+                      {% endif %}
+
+                    </div>
+
+                   
+                    <div class="input-style-1">
+                      <label>Detail </label>
+
+                      
+
+                      {% if preview is defined %}
+                          <textarea name="lesson_detail" rows="10">{{ preview[2] }}</textarea>                          
+                      {% else %}
+                          <textarea name="lesson_detail" rows="10"></textarea>
+                      {% endif %}
+
+                    </div>
+                   
+
+                    <div class="select-style-1">
+                      <label>Class/Subject </label>
+                      <div class="select-position">
+                      <select name="class_subject">
+
+
+                        {% for data_subject in data_subject %}
+                            {% for data_class in data_class %}
+
+
+                              {% if preview is defined %} <!-- Editing record -->
+
+                                  {% set subject_id = data_subject[0] | int %}
+                                  {% set editing_subject_id = preview[3] | int %}
+
+                                  
+                                  {% set subject_class_id = data_subject[2] | int %}
+                                  {% set class_class_id = data_class[0] | int %}
+
+                                  {% if subject_id == editing_subject_id %}
+                                      {% if subject_class_id == class_class_id %}
+                                          <option value="{{ data_subject[0] }}" selected >{{ data_class[1] }} / {{ data_subject[1] }}</option> 
+                                      {% endif %}  
+                                  {% else %}
+                                      {% if subject_class_id == class_class_id %}
+                                          <option value="{{ data_subject[0] }}">{{ data_class[1] }} / {{ data_subject[1] }}</option> 
+                                      {% endif %}
+                              {% endif %}
+
+
+
+                            {% else %} <!-- Adding record -->
+                                {% set subject_class_id = data_subject[2] | int %}
+                                {% set class_class_id = data_class[0] | int %}
+
+                                  {% if subject_class_id == class_class_id %}
+                                     <option value="{{ data_subject[0] }}">{{ data_class[1] }} / {{ data_subject[1] }}</option> 
+                                  {% endif %}
+
+                            {% endif %} 
+
+
+
+                          {% endfor %}  
+
+                        {% endfor %}                     
+                      </select> 
+                      </div>                      
+                    </div>
+                  
+
+
+                    <div class="select-style-1">
+                      <label>Term </label>
+                      <div class="select-position">
+                      <select name="term">
+                        {% for terms_rec in data_term %}
+
+                            {% if preview is defined %} <!-- Editing record -->
+
+                              {% set term_id = terms_rec[0] | int %}
+                              {% set selected_term_id = preview[5] | int %}
+
+                              {% if term_id == selected_term_id %}
+                                <option value="{{ terms_rec[0] }}" selected >{{ terms_rec[1] }}</option>
+                              {% else %}
+                                <option value="{{ terms_rec[0] }}">{{ terms_rec[1] }}</option> 
+                              {% endif %}
+
+
+
+                            {% else %} <!-- Adding record -->
+                              <option value="{{ terms_rec[0] }}">{{ terms_rec[1] }}</option> 
+                            {% endif %} 
+                        {% endfor %}                     
+                      </select> 
+                      </div>                      
+                    </div>
+
+
+
+
+                    <div class="select-style-1">
+                      <label>Week </label>
+                      <div class="select-position">
+                      <select name="week">
+                        {% for data_weeks in data_week %}
+
+                            {% if preview is defined %} <!-- Editing record -->
+
+                              {% set week_id = data_weeks[0] | int %}
+                              {% set selected_week_id = preview[6] | int %}
+
+                              {% if week_id == selected_week_id %}
+                                <option value="{{ data_weeks[0] }}" selected >{{ data_weeks[1] }}</option>
+                              {% else %}
+                                <option value="{{ data_weeks[0] }}">{{ data_weeks[1] }}</option> 
+                              {% endif %}
+
+
+
+                            {% else %} <!-- Adding record -->
+                              <option value="{{ data_weeks[0] }}">{{ data_weeks[1] }}</option> 
+                            {% endif %} 
+                        {% endfor %}                     
+                      </select> 
+                      </div>                      
+                    </div>
+
+
+
+
+                   
+
+
+                    
+
+                    {% if preview is defined %}
+                      <input type = "hidden" name = "edit_id" value="{{ preview[0] }}" />
+                    {% endif %}
+
+                  <div class="col-12">                      
+					  <input type="submit" value="Save" class="main-btn primary-btn btn-hover">
+                  </div>
+
+                   
+                </div>
+              </div>
+              <!-- end card -->
+            </div>
+            <!-- end col -->
+
+            
+          </div>
+          <!-- end row -->
+		</form>
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>Teachers</h2>
+                </div>
+               
+
+{% if msg %}
+  <font color='blue'>{{ msg }}</font>
+{% elif request.args.get('done')  %}  
+  <font color='blue'> Record edited</font>
+{% endif %}
+
+
+              </div>
+              <!-- end col -->
+             
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+         
+       
+         
+
+         
+          
+          <p align='center'><a href="{{ url_for('authentication_blueprint.teacher_register') }} " class='btn btn-success'>Register Teacher</a></p>
+          <br/>
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+            
+              <div class="icon-card mb-100">
+              
+               
+
+                <div class="table-wrapper table-responsive" style="width: 100%">
+                  <table class="table table-hover table-striped table-bordered" >
+                        <tr>
+                            <th>Id</th>
+                            <th>Surname</th>
+                            <th>Other names</th>
+                            <th>Gender</th>
+
+                            <th>D.O.B</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Subject</th>
+                            <th>Class</th>
+                            
+                            <!--<th>Edit</th>-->
+                            <th>Delete</th>
+                        </tr>
+                        
+                        {%for teacher_record in teacher_record %} 
+                            <tr>
+                            <td>{{ teacher_record[0] }}</td>
+                            <td>{{ teacher_record[1] }}</td>
+                            <td>{{ teacher_record[2] }}</td>
+                            <td>{{ teacher_record[3] }}</td>    
+                            <td>{{ teacher_record[4] }}</td>
+                            <td>{{ teacher_record[5] }}</td>
+                            <td>{{ teacher_record[6] }}</td>
+                            
+
+                            {%for subject in data_subject%}
+                                  {% set subject_id = subject[0] | int %}
+                                  {% set lesson_subject_id = teacher_record[7] | int %}
+                                 
+                                  {% if subject_id == lesson_subject_id %}
+                                    <!-- Get subject name-->
+                                    <td>{{ subject[1] }}</td>   
+                                  {% endif %}     
+
+                            {%endfor%} 
+
+
+                            {%for class_val in data_class%}
+                                {% set class_id = class_val[0] | int %}
+                                {% set lesson_class_id = teacher_record[8] | int %}
+                              
+                                {% if class_id == lesson_class_id %}
+                                  <!-- Get class name-->
+                                  <td>{{ class_val[1] }}</td>   
+                                {% endif %}                                  
+                            {%endfor%}
+
+
+
+                            
+                            <!--<td><a href="#" class='btn btn-primary'>Edit</a></td>-->
+                            <td>
+                              <a href="{{ url_for('teacher_blueprint.delete_teacher', id=teacher_record[0]) }} " class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                            
+                            </td>
+                             </tr>   
+                        {%endfor%}   
+                    </table>
+                  </div>
+                
+
+
+
+              </div> 
+
+            </div>
+         
+
+         
+        </div>
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+

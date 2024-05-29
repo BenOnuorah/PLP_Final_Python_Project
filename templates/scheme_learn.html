@@ -1,0 +1,214 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>Scheme of work</h2>
+                </div>
+              </div>
+              <!-- end col -->
+
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('auth') }}">Dashboard</a>
+                      </li>
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('scheme_of_work_blueprint.scheme') }}">Scheme of work</a>
+                      </li>
+
+                      <li class="breadcrumb-item">
+                        
+                        <a href="{{ url_for('scheme_of_work_blueprint.detail', class_id=class_id, term=term_id) }}"> {{ class_name }} ({{ term_name }})</a>
+                      </li>
+
+                      
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Learn
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+
+
+
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+         
+       
+        
+
+         
+          
+          
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+            
+             
+              
+
+
+                
+                <div class="card-style settings-card-1 mb-30">
+                  <p align='center'>Topic:</p>
+                  <h3 align='center'> {{ lesson_title }}</h3> 
+
+                  Class: <b>{{ class_name }}</b>
+                  <br/>
+                  Subject: <b>{{ subject_name}}</b>
+                  <br/>
+                  Term: <b>{{ term_name }}</b>
+                  <br/>
+                  Week: <b>{{ week }}</b>
+                  <br/>
+
+
+                  
+                
+                <hr/> 
+                {% autoescape false %}
+                  {{ lesson_detail | replace("\n", "<br/>")  }}   
+                {% endautoescape %}
+
+
+
+
+
+                <hr/>     
+
+                  {%for data in data_media %} 
+                     <!---------- YOUTUBE VIDEO RENDER -------- -->
+                        {% if data[3] %}                             
+                            <iframe style='width:50%;height:200px' src={{ data[3] }}></iframe>
+                            <hr/>                          
+                        {% endif %}    
+                     
+
+                      <!---------- IMAGE RENDER-------- -->
+                        {% if data[4] %} 
+                          {% set img_name = data[4] %} 
+                          <img src="{{ url_for('static', filename='images_folder/'+img_name) }}" width='100%' />
+                          <hr/>     
+                        {% endif %}      
+                        
+                  {%endfor%} 
+                  
+                  
+                  <hr/>     
+
+                  {%for data in data_assignment %} 
+
+                      <h3>Assignment Title: <b> {{ data[2] }} </b></h3> <br/> 
+                      
+                      {% autoescape false %}
+                        {{ data[3] | replace("\n", "<br/>")  }}   
+                      {% endautoescape %}
+                      <br/>
+                      <h6>Maximum score: {{ data[4] }}</h6>
+
+                      <br/><br/><br/>
+
+                      
+
+                      {% if data_submission[0] %}  
+
+                              <h2><font color='blue'>You have submitted this assignment</font></h2>                   
+                              
+                            {%for data_submission in data_submission %}  
+
+                              {% set expected_score = data_submission[1] %} 
+                              {% set teacher_score = data_submission[2] %}
+                              {% set your_answer = data_submission[6] %}
+                              {% set your_upload = data_submission[7] %}
+                              {% set date_submitted = data_submission[8] %}
+                              {% set teacher_note = data_submission[9] %}
+                              <br/>
+                             
+                              {% autoescape false %}
+                                {{ your_answer | replace("\n", "<br/>")  }}   
+                              {% endautoescape %}
+                              <br/>
+                              <b>Date submitted:</b>  {{ date_submitted }} 
+                              <br/>
+                              {% if your_upload != "" %}
+                                  <img src="{{ url_for('static', filename='images_folder/'+your_upload) }}" width='50%' />
+                              {% endif %} 
+
+
+                              {% if teacher_score != "" %}
+                                  <hr/>
+                                  <h2><font color='green'>Your Grade</font></h2> 
+                                  <br/>
+                                  <b>Your score:</b> <b><font color='green'>{{ teacher_score }}</font></b> out of {{ expected_score }}<br/>
+                                  {% if teacher_note != "" %}
+                                    <b>Teacher explanation:</b> {{ teacher_note }}
+                                  {% endif %} 
+                              {% else %}   
+                                   <br/> <font color='red'>Not graded yet!</font>
+                              {% endif %} 
+
+                            {% endfor %} 
+
+                      {% else %} 
+                                <h4>Submit Assignment</h4>
+                                <form action="{{ url_for('lesson_assignment_blueprint.assignment_submission') }}" method="post" enctype="multipart/form-data">
+                                  <div class="input-style-1">
+                                    <label>Your Answers </label>
+                                        <textarea name="detail" rows="10" ></textarea>
+                                  </div>
+
+                                  <div class="input-style-1">
+                                    <label>Upload image (Optional)</label>
+                                    <input type="file" name="image_file" />                   
+                                  </div>
+
+                                  <div class="col-12">                      
+                                    <input type="submit" value="Submit" class="main-btn primary-btn btn-hover">
+                                  </div>
+                                  <input type="hidden" name="lesson_id" value="{{ lesson_id }}">   
+                                  <input type="hidden" name="max_score" value="{{ data[4] }}">  
+
+                                  <input type="hidden" name="class_id" value="{{ class_id }}">  
+                                  <input type="hidden" name="term" value="{{ term_id }}">  
+                                  
+                                  
+                                </form>  
+                      {% endif %}           
+                     
+
+                  {%endfor%} 
+
+
+                </div>                
+             
+
+            </div>
+         
+
+         
+       
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+

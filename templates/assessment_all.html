@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>Assessment (Graded submissions)</h2>
+                </div>
+              
+
+              </div>
+              <!-- end col -->
+            
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+         
+       
+        
+
+         
+          
+          
+          <div class="col-xl-12 col-lg-12 col-sm-12"> 
+
+            <p align='center'><a href="{{ url_for('assessment_blueprint.assessment') }}" class="btn btn-danger">Ungraded Submissions</a></p>
+            <br/>
+              <div class="icon-card mb-100">
+                
+               
+
+                <div class="table-wrapper table-responsive" style="width: 100%">
+                  <table class="table table-hover table-striped table-bordered" >
+                    <tr>
+                        <th>Submitted by</th>   
+                        <th>Topic</th>    
+                        <th>Class</th>     
+                        <th>Subject</th>    
+                        <th>Term</th>  
+                        <th>Week</th>                
+                        <th>Score</th> 
+                        <th> </th>                      
+                    </tr>
+                    
+                    {%for assessment_record2 in assessment_record2 %} 
+                               <tr>
+                                    <td>{{ assessment_record2[1] }} ({{ assessment_record2[2] }}) </td>
+                                    <td> {{ assessment_record2[8] }} </td>
+                                    <td> {{ assessment_record2[3] }} </td>
+                                    <td> {{ assessment_record2[4] }} </td>
+                                    <td> {{ assessment_record2[5] }} </td>
+                                    <td> {{ assessment_record2[6] }} </td>
+                                    <td> <b>{{ assessment_record2[10] }}</b> </td>  
+                                     
+                                    <td>
+                                      <form action="{{ url_for('assessment_blueprint.assessment_input') }}" method="post">
+                                          <input type="hidden" name="submission_id" value="{{  assessment_record2[0] }}">
+                                          <input type="hidden" name="view_from" value="all_graded">
+                                          <input type="submit" value="Detail" class="main-btn warning-btn btn-hover">
+                                      </form>
+                                    </td>
+                                </tr> 
+                                
+                    {%endfor%}   
+                </table>
+                </div> 
+
+                
+              </div> 
+
+            </div>
+         
+
+         
+        </div>
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+

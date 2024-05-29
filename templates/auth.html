@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+             
+             
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+          <b>
+            <h2>Welcome: {{ session.login_sname }} ({{session.level}}) </h2> 
+          </b>
+         
+          <br/>
+
+         <!-- Unlock your learning journey today! <br/><br/> -->
+
+          <div class="row">  
+           
+          {% if session.level=="admin" %} 
+                  <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <div class="icon-card mb-30">
+                      
+                      <div class="content"> 
+                            <h1>School Portal - Admin</h1>
+                            <br/> <br/>
+                            <a href="{{ url_for('class_blueprint.class_record') }}" class='btn btn-success'>
+                              Setup / Manage Class
+                            </a>
+                             <br/> <br/>
+                            <a href="{{ url_for('subject_blueprint.subject') }}" class='btn btn-warning'>
+                              Setup / Manage Subject
+                            </a>
+                            
+                            <br/> <br/>
+
+                            <a href="{{ url_for('lesson_blueprint.lesson') }}" class='btn btn-primary'> 
+                              Setup / Manage Lessons or Topics / Assignment / Media
+                            </a>
+
+                            <br/> <br/>
+
+                            <a href="{{ url_for('teacher_blueprint.teacher_record') }}" class='btn btn-dark'> 
+                              Setup / Manage Teachers
+                            </a>
+
+                            <br/> <br/>
+                            
+                            <a href="{{ url_for('student_blueprint.student_record') }}" class='btn btn-danger'> 
+                              See Students
+                            </a>
+
+                            <br/> <br/>
+                            <a href="{{ url_for('scheme_of_work_blueprint.scheme') }}" class='btn btn-success'> 
+                              Scheme of work
+                            </a>
+
+                      </div>
+                    </div> 
+                  </div>
+
+
+            {% elif session.level=="teacher"  %}
+
+                  <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <div class="icon-card mb-100">
+                      
+                     
+                            <table class="table table-hover" >
+                              <tr>
+                                  <td>Name:</td>
+                                  <td><b>{{ session.login_sname }} {{ session.login_oname }}</b></td>
+                              </tr>
+
+                              <tr>
+                                <td>Gender:</td>
+                                <td><b>{{ session.login_gender }} </b></td>
+                              </tr>
+
+                              <tr>
+                                <td>DOB:</td>
+                                <td><b>{{ session.login_dob }} </b></td>
+                              </tr>
+
+                          
+                              <tr>
+                                  <td>Email:</td>
+                                  <td><b>{{ session.login_id }} </b></td>
+                              </tr>
+
+                              <tr>
+                                <td>Phone:</td>
+                                <td><b>{{ session.login_phone }} </b></td>
+                              </tr>
+
+                              <tr>
+                                <td>Subject:</td>
+                                <td><b>{{ session.subject_name }} </b></td>
+                              </tr>   
+
+                              <tr>
+                                <td>Class:</td>
+                                <td><b>{{ session.class_name }} </b></td>
+                              </tr> 
+                              
+                          </table>
+                          
+                      
+                    </div> 
+                  </div>  
+
+            {% elif session.level=="student"  %}
+          
+            <div class="col-xl-6 col-lg-6 col-sm-6">
+              <h3>My Learning</h3>
+              <div class="icon-card mb-30">
+                
+                <div class="content">
+                  <a href="{{ url_for('scheme_of_work_blueprint.scheme') }}" class="main-btn primary-btn btn-hover">
+                    Scheme of work
+                  </a>
+                  
+                </div>                
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+           
+
+            <div class="col-xl-6 col-lg-6 col-sm-6">
+              <h3>My Performance</h3>
+              <div class="icon-card mb-30">
+                
+                
+                <div class="content">
+                   
+                  <a href="{{ url_for('student_blueprint.student_record') }}" class="main-btn success-btn btn-hover">
+                    My Performance
+                  </a>
+
+                  
+                                  
+
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+           
+            
+          
+          {% endif %}
+        </div>
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+

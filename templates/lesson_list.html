@@ -1,0 +1,173 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>Lessons</h2>
+                </div>
+              
+
+
+{% if request.args.get('add')  %}  
+  <font color='green'>Record saved</font>
+{% elif request.args.get('done')  %}  
+  <font color='blue'> Record edited</font>
+{% elif request.args.get('delete')  %}  
+  <font color='red'> Record deleted</font>  
+{% endif %}
+
+
+              </div>
+              <!-- end col -->
+             
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+         
+       
+        
+
+         
+          
+          <p align='center'><a href="{{ url_for('lesson_blueprint.lesson_input') }} " class='btn btn-success'>Add Lesson</a></p>
+          <br/>
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+            
+              <div class="icon-card mb-100">
+              
+               
+
+                <div class="table-wrapper table-responsive" style="width: 100%">
+                  <table class="table table-hover table-striped table-bordered" >
+                        <tr>
+                            <th>#</th>
+                            <th>Lesson</th> 
+                            <th>Subject</th> 
+                            <th>Class</th>
+
+                            <th>Term</th>  
+                            <th>Week</th>                          
+                            
+                            <th>More</th>
+                            <th>Manage</th>
+                        </tr>
+                        
+                        {%for data_lesson in data_lesson%} 
+                            <tr>
+
+                            <td>{{ data_lesson[0] }}</td>   
+                            <td><b>{{ data_lesson[1] }}</b></td>
+
+                            {%for subject in data_subject%}
+                                  {% set subject_id = subject[0] | int %}
+                                  {% set lesson_subject_id = data_lesson[3] | int %}
+                                 
+                                  {% if subject_id == lesson_subject_id %}
+                                    <!-- Get subject name-->
+                                    <td>{{ subject[1] }}</td>   
+                                  {% endif %}     
+
+                            {%endfor%} 
+
+
+                            {%for class_val in data_class%}
+                                {% set class_id = class_val[0] | int %}
+                                {% set lesson_class_id = data_lesson[4] | int %}
+                              
+                                {% if class_id == lesson_class_id %}
+                                  <!-- Get class name-->
+                                  <td>{{ class_val[1] }}</td>   
+                                {% endif %}                                  
+                            {%endfor%}
+
+                            
+
+                            {%for term in data_term%}
+                                  {% set term_id = term[0] | int %}
+                                  {% set subject_term_id = data_lesson[5] | int %}
+
+                                  {% if term_id == subject_term_id %}
+                                    <!-- Get term name-->  
+                                    <td>{{ term[1] }}</td>
+                                  {% endif %}     
+                            {%endfor%}
+
+
+                            {%for week in data_week%}
+                                  {% set week_id = week[0] | int %}
+                                  {% set subject_week_id = data_lesson[6] | int %}
+
+                                  {% if week_id == subject_week_id %}
+                                    <!-- Get term name-->  
+                                    <td>Week {{ week[1] }}</td>
+                                  {% endif %}     
+                            {%endfor%}
+                            
+
+                          
+                            <td>    
+
+
+                              {% set count = namespace(value=0) %}
+                              {% for data_assignment in data_assignment %} 
+                                 
+                                  {% if data_assignment[0] | int == data_lesson[0]  | int %}
+                                      {% set count.value = count.value + 1 %}
+                                  {% endif %}     
+                              {% endfor %}
+
+                              
+                              {% set count2 = namespace(value=0) %}
+                              {% for data_media in data_media %} 
+                                 
+                                  {% if data_media[0] | int == data_lesson[0]  | int %}
+                                      {% set count2.value = count2.value + 1 %}
+                                  {% endif %}     
+                              {% endfor %}
+
+                              
+                              
+                                  <a href="{{ url_for('lesson_assignment_blueprint.assignment', value=data_lesson[0]) }}" class='btn btn-success'>[{{ count.value }}] Add/Manage Assignment</a>
+                                  <br/><br/>                                  
+                                  <a href="{{ url_for('lesson_more_blueprint.lesson_more', value=data_lesson[0]) }}" class='btn btn-warning'>[{{ count2.value }}] Add/Manage Media</a>
+                            </td>
+                            <td>
+                              <a href="lesson_input?task=edit&value={{data_lesson[0]}}" class='btn btn-primary'>Edit</a>
+                              <br/><br/>
+                              <a href="delete_lesson?value={{data_lesson[0]}}" class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
+                          </tr>   
+                        {%endfor%}   
+                    </table>
+                  </div>  
+
+
+                
+              </div> 
+
+            </div>
+         
+
+         
+        </div>
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+

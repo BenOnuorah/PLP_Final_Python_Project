@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>Scheme of work</h2>
+                </div>
+              </div>
+              <!-- end col -->
+
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('auth') }}">Dashboard</a>
+                      </li>
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('scheme_of_work_blueprint.scheme') }}">Scheme of work</a>
+                      </li>
+
+                      
+                      <li class="breadcrumb-item active" aria-current="page">
+                        {{ class_name }} ({{ term_name }})
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+
+
+
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+         
+       
+        
+
+         
+          
+          
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+            <h4 align="center">{{ class_name }} | {{ term_name }}  </h4>
+{% if assignment_submitted  %}  
+    <p align="center"><font color='blue'> Assignment Submitted</font></p>
+{% endif %}  
+              <div class="icon-card mb-100">
+              
+              
+
+
+                <div class="table-wrapper table-responsive" style="width: 100%">
+                  <table class="table table-hover table-striped table-bordered" >
+                    <tr>
+                        <th>Week</th>
+                                              
+                        <th>Subjects</th>   
+                          
+                        <th>Topic</th>  
+                        <th>Term</th>     
+                        <th></th>                  
+                    </tr>
+                    
+                  {%for data_lesson in data_lesson %} 
+
+                        <tr>
+
+
+                        <td>Week {{ data_lesson[6] }}</td>  
+                       
+                        <td>
+                          {%for data_subject in data_subject %} 
+                              {% if data_subject[0] | int == data_lesson[3]  | int %}
+                                {{ data_subject[1] }}
+                              {% endif %} 
+                          {%endfor%}   
+                        </td>    
+                        
+                        <td>{{ data_lesson[1] }}</td>  
+                        <td>
+                          {{ term_name }}  
+                        </td>
+                        <td>
+                          <form action="{{ url_for('scheme_of_work_blueprint.learn') }}" method="post">
+                              
+                              <input type="hidden" name="lesson_id" value="{{ data_lesson[0] }}">
+                              <input type="hidden" name="subject_id" value="{{ data_lesson[3] }}">
+                              
+                              <input type="hidden" name="class_id" value="{{ data_lesson[4] }}">
+                              <input type="hidden" name="term_name" value="{{ term_name }}">
+
+                              <input type="submit" value="Learn" class="main-btn dark-btn btn-hover">
+
+                                     
+                              
+                             
+                          </form>
+                          
+                        
+                        </td>
+                       
+                        </tr>   
+                    {%endfor%}   
+                </table>
+                
+              </div> 
+
+            </div>
+         
+
+         
+        </div>
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+

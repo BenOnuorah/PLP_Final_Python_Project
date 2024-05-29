@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>Classes</h2>
+                </div>
+                {{ msg }}
+
+
+{% if msg %}
+  <font color='blue'>{{ msg }}</font>
+{% elif request.args.get('done')  %}  
+  <font color='blue'> Record edited</font>
+{% endif %}
+
+
+              </div>
+              <!-- end col -->
+             
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+         
+       
+          {% if session.level=="admin" %} 
+
+         
+          
+          <p align='center'><a href="{{ url_for('class_blueprint.class_input') }} " class='btn btn-success'>Add Class</a></p>
+          <br/>
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+            
+              <div class="icon-card mb-100">
+              
+               
+                <div class="table-wrapper table-responsive" style="width: 100%">
+                  <table class="table table-hover table-striped table-bordered" >
+                        <tr>
+                            <th>Class</th>                           
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        
+                        {%for data_class in class_list %} 
+                            <tr>
+                            <td>{{ data_class[1] }}</td>
+
+                           
+                            
+                            <td><a href="class_input?task=edit&value={{data_class[0]}}" class='btn btn-primary'>Edit</a></td>
+                            <td><a href="delete_class?value={{data_class[0]}}" class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
+                             </tr>   
+                        {%endfor%}   
+                    </table>
+                    </div>
+                
+              </div> 
+
+            </div>
+          {% endif %}
+
+         
+        </div>
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+

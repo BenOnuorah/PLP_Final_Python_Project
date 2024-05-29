@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="titlemb-30">
+                  <h2>My Profile</h2>
+                </div>
+               
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('auth') }}">Home</a>
+                      </li>           
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Profile
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+
+          <div class="row">
+
+
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+              <div class="icon-card mb-100">
+                
+               
+                      <table class="table table-hover" >
+                        <tr>
+                            <td>Name:</td>
+                            <td><b>{{ session.login_sname }} {{ session.login_oname }}</b></td>
+                        </tr>
+
+                        <tr>
+                          <td>Gender:</td>
+                          <td><b>{{ session.login_gender }} </b></td>
+                        </tr>
+
+                        <tr>
+                          <td>DOB:</td>
+                          <td><b>{{ session.login_dob }} </b></td>
+                        </tr>
+
+                    
+                        <tr>
+                            <td>Email:</td>
+                            <td><b>{{ session.login_id }} </b></td>
+                        </tr>
+
+                        <tr>
+                          <td>Phone:</td>
+                          <td><b>{{ session.login_phone }} </b></td>
+                        </tr>
+
+                        
+                        <tr>
+                          <td>Class:</td>
+                          <td><b>{{ session.class_name }} </b></td>
+                        </tr> 
+                        
+                    </table>
+                    
+                
+              </div> 
+            </div>  
+
+            <!-- end card -->
+            </div>
+            <!-- end col -->
+        
+        
+            </div>
+            <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>    
+          <!-- ========== title-wrapper end ========== -->
+
+
+
+
+{% endblock %}

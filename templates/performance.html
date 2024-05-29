@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>{{ student_fullname }} (Performance)</h2>
+                </div>
+              
+
+              </div>
+              <!-- end col -->
+              
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('auth') }}">Dashboard</a>
+                      </li>
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('student_blueprint.student_record') }}">Students</a>
+                      </li>
+
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Performance
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+
+
+
+
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+         
+       
+        
+
+         
+          
+          
+          <div class="col-xl-12 col-lg-12 col-sm-12"> 
+
+           
+              <div class="icon-card mb-100">
+                
+               
+
+                <div class="table-wrapper table-responsive" style="width: 100%">
+                  <table class="table table-hover table-striped table-bordered" >
+                    <tr>                        
+                        <th>Class</th>     
+                        <th>Subject</th>  
+                        <th>Topic</th>  
+                        <th>Term</th>  
+                        <th>Week</th>                
+                        <th>Max. Score</th> 
+                        <th>Student Score</th> 
+                        <th> </th>                      
+                    </tr>
+                    
+                    {%for performance_record in performance_record %} 
+                               <tr>                                   
+                                    <td> {{ performance_record[1] }} </td>
+                                    <td> {{ performance_record[2] }} </td>
+                                    <td> {{ performance_record[3] }} </td>
+                                    <td> {{ performance_record[4] }} </td>
+                                    <td> {{ performance_record[5] }} </td>
+                                    <td> {{ performance_record[9] }} </td>  
+                                    <td> 
+                                    
+                                      {% if performance_record[10] == 'Not Done' %} 
+                                          <font color='red'> {{ performance_record[10] }} </font>
+                                               
+                                      {% elif performance_record[10] == '' %} 
+                                          <font color='green'> Not graded yet! </font>
+                                        
+                                      {% else %} 
+                                          <font color='blue'> <b>{{ performance_record[10] }}</b> </font>
+                                      {% endif %} 
+                                    
+                                    </td>
+                                     
+                                    <td>
+                                      <a href="{{ url_for('performance_blueprint.performance_detail', lesson_id=performance_record[0], assignment_id=performance_record[6], submission_id=performance_record[8], student_id=performance_record[11], class_id=performance_record[12], subject_id=performance_record[13] ) }} " class='btn btn-warning'>Detail</a>
+
+                                    </td>
+                                </tr> 
+                                
+                    {%endfor%}   
+                </table>
+                </div>
+                
+                
+              </div> 
+
+            </div>
+         
+
+         
+        </div>
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+

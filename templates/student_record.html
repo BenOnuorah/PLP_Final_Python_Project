@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+
+      
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>Student / Performance</h2>
+                </div>
+               
+
+{% if msg %}
+  <font color='blue'>{{ msg }}</font>
+{% elif request.args.get('done')  %}  
+  <font color='blue'> Record edited</font>
+{% endif %}
+
+
+              </div>
+              <!-- end col -->
+             
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+         
+       
+         
+
+         
+          
+
+          <br/>
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+            
+              <div class="icon-card mb-100">
+              
+               
+
+                <div class="table-wrapper table-responsive" style="width: 100%">
+                  <table class="table table-hover table-striped table-bordered" >
+                        <tr>
+                            <th>Id</th>
+                            <th>Surname</th>
+                            <th>Other names</th>
+                            <th>Gender</th>
+
+                            <th>D.O.B</th>
+                            <th>Email</th>
+                            <th>Phone</th>                           
+                            <th>Class</th>
+                            
+                            <!--<th>Edit</th>-->
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        
+                        {%for record in student_record %} 
+                            <tr>
+                            <td>{{ record[0] }}</td>
+                            <td>{{ record[1] }}</td>
+                            <td>{{ record[2] }}</td>
+                            <td>{{ record[3] }}</td>    
+                            <td>{{ record[4] }}</td>
+                            <td>{{ record[5] }}</td>
+                            <td>{{ record[6] }}</td>
+                            
+
+                           
+                            {%for class_val in data_class%}
+                                {% set class_id = class_val[0] | int %}
+                                {% set lesson_class_id = record[7] | int %}
+                              
+                                {% if class_id == lesson_class_id %}
+                                  <!-- Get class name-->
+                                  <td>{{ class_val[1] }}</td>   
+                                {% endif %}                                  
+                            {%endfor%}
+
+
+
+                            
+                            <!--<td><a href="#" class='btn btn-primary'>Edit</a></td>-->
+                            <td>
+                              {% if session.level=="admin" %} 
+                                <a href="{{ url_for('student_blueprint.delete_student', id=record[0]) }} " class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                              {% endif %} 
+                            </td>
+
+                            <td>
+                             
+                                <a href="{{ url_for('performance_blueprint.performance', id=record[0], class_id=record[7] ) }} " class='btn btn-success'>Performance</a>
+                              
+                            </td>
+
+                             </tr>   
+
+                        {%endfor%}   
+                    </table>
+                  </div>
+                
+              </div> 
+
+            </div>
+         
+
+         
+        </div>
+          <!-- End Row -->
+  
+          
+        </div>
+        <!-- end container -->
+      </section>
+
+{% endblock %}
+
