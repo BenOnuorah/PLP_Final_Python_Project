@@ -4,7 +4,9 @@ To see how it work visit the URL https://learn.org.ng/school_portal click the lo
 Login as admin using:
 
 Email: admin
+
 Password: onuorah12
+
 Login as: Teacher
 
 and click the login button
